@@ -1,0 +1,171 @@
+var question
+var questions = { 
+  up: 0,
+  down: 1,
+  left: 2,
+  right: 3
+};
+
+var defaultTime = 10
+var time = defaultTime
+var timer
+var score = 0
+
+function randomQuestion(){
+  const rand = Math.floor(Math.random() * Object.keys(questions).length);
+  return questions[Object.keys(questions)[rand]];
+}
+
+function getQuestionImagePath(question){
+  switch(question){
+    case questions.up:
+      return "<%= image_path("practice_images/cursor_up") %>"
+
+    case questions.down:
+      return "<%= image_path("practice_images/cursor_down") %>"
+
+    case questions.left:
+      return "<%= image_path("practice_images/cursor_left") %>"
+
+    case questions.right:
+      return "<%= image_path("practice_images/cursor_right") %>"
+  }
+}
+
+function getQuessionKey(question){
+  switch(question){
+    case questions.up:
+      return "p"
+
+    case questions.down:
+      return "n"
+
+    case questions.left:
+      return "b"
+
+    case questions.right:
+      return "f"
+  }
+}
+
+function getQuessionGuide(question){
+  switch(question){
+    case questions.up:
+      return "Ctrl + P"
+
+    case questions.down:
+      return "Ctrl + N"
+
+    case questions.left:
+      return "Ctrl + B"
+
+    case questions.right:
+      return "Ctrl + F"
+  }
+}
+
+function startPractice(){
+  if (event.key === " ") {
+    updateQuestion()
+    window.addEventListener("keydown", checkAnser)
+    window.removeEventListener("keydown", startPractice)
+    timer = setInterval(timeCount, 1000)
+  }
+}
+
+function timeCount(){
+  time--
+  document.getElementById("js-time-view").innerText = time
+
+  if(time == 0){
+    clearInterval(timer);
+    endPractice();
+  }
+}
+
+function checkAnser(){
+  if(event.ctrlKey){
+    if(event.key === getQuessionKey(question)){
+     updateQuestion()
+     incrementScore()
+    }
+  }
+}
+
+function updateQuestion(){
+  question = randomQuestion()
+  const jsQuestionImage = document.getElementById("js-question-image")
+  jsQuestionImage.src = getQuestionImagePath(question)
+  jsQuestionImage.width = "200"
+  jsQuestionImage.height = "280"
+
+  const jsQuestionGuide = document.getElementById("js-question-guide")
+  jsQuestionGuide.innerText = getQuessionGuide(question)
+}
+
+function incrementScore(){
+  score++ 
+  document.getElementById("js-score-view").innerText = score
+}
+
+function endPractice(){
+  // 画像更新
+  const jsQuestionImage = document.getElementById("js-question-image")
+  jsQuestionImage.src = "<%= image_path("practice_images/end") %>"
+  jsQuestionImage.width = "300"
+  jsQuestionImage.height = "300"
+
+  // ガイドテキスト更新
+  document.getElementById("js-question-guide").innerText = "おつかれさまでした〜"
+
+  // result要素の表示
+  document.getElementById('js-result-element').style.display = "block"
+
+  // score-filed更新
+  document.getElementById("js-score-field").value = score
+
+  // イベント解除
+  window.removeEventListener("keydown", checkAnser)
+}
+
+function initPlactice(){
+  // scoreリセット
+  score = 0
+  document.getElementById("js-score-view").innerText = score
+
+  // 残り時間リセット
+  time = defaultTime
+  document.getElementById("js-time-view").innerText = time
+
+  // 画像リセット
+  const jsQuestionImage = document.getElementById("js-question-image")
+  jsQuestionImage.src = "<%= image_path("practice_images/start") %>"
+  jsQuestionImage.width = "400"
+  jsQuestionImage.height = "280"
+
+  // ガイドテキストリセット
+  document.getElementById("js-question-guide").innerText = "space キーでstart"
+
+  // result要素の非表示
+  document.getElementById('js-result-element').style.display = "none"
+
+  // score-field更新
+  window.removeEventListener("keydown", checkAnser)
+
+  // 開始イベントのセット
+  window.addEventListener("keydown", startPractice)
+
+  // リセットのセット
+  document.getElementById("js-retry-btn").addEventListener("click", initPlactice)
+}
+
+// main
+if (document.readyState !== 'loading') {
+  console.log("実行")
+  initPlactice();
+} else {
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("実行")
+    initPlactice()
+  });
+}
