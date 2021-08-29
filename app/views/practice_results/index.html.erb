@@ -1,7 +1,7 @@
 <h1 class="mt-5">ランキング</h1>
 
 <div class="mt-3">
-  <table class="table table-hover">
+  <table class="table table-hover w-75">
     <thead class="thead-default">
       <tr>
         <th>順位</th>
@@ -12,8 +12,16 @@
 
     <tbody>
       <% @practice_results.each.with_index(1) do |practice_result, rank| %>
-        <tr>
-          <td><%= rank %></td>
+        <tr >
+          <% if rank == 1 %>
+            <th><i class="fas fa-crown"></i> <%= rank %></th>
+          <% elsif rank == 2 %>
+            <th><i class="fas fa-chess-king"></i> <%= rank %></th>
+          <% elsif rank == 3 %>
+            <th><i class="fas fa-chess-knight"></i> <%= rank %></th>
+          <% else %>
+            <th><i class="fas fa-running"></i> <%= rank %></th>
+          <% end %>
           <td><%= practice_result.name %></td>
           <td><%= practice_result.score %></td>
         </tr>
