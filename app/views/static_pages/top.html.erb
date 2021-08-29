@@ -1,3 +1,39 @@
-<h1>top page </h1>
-<%= link_to 'Practice Start', practice_path, class: 'btn btn-primary' %>
-<%= link_to 'ランキング', practice_results_path, class: 'btn btn-primary' %>
+
+<h1 class="mt-5">カーソルキーからの卒業</h1>
+<p class="mt-3 mb-3">
+  カーソルの移動にはショートカットキーを利用するべきです。<br>
+  ショートカットキーを利用することで、あなたはホームポジションを保持できます。<br>
+  Consor Placticeでショートカットの練習を始めましょう！
+</p>
+
+<table class="table table-bordered w-50" >
+  <thead>
+    <tr>
+      <th scope="col">移動方向</th>
+      <th scope="col">ショートカットキー</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">↑</th>
+      <td>Ctrl + P</td>
+    </tr>
+    <tr>
+      <th scope="row">←</th>
+      <td>Ctrl + B</td>
+    </tr>
+    <tr>
+      <th scope="row">→</th>
+      <td>Ctrl + F</td>
+    </tr>
+    <tr>
+      <th scope="row">↓</th>
+      <td>Ctrl + N</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="mt-3">
+  <%= link_to 'スタート', practice_path, class: 'btn btn-dark ml-2' %>
+  <%= link_to 'ランキング', practice_results_path, class: 'btn btn-dark ml-2' %>
+</div>

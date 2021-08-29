@@ -1,1 +1,14 @@
 @import "bootstrap";
+
+.header-titile, .header-titile:visited, .header-titile:hover, .header-titile:active{
+  color: white;
+  text-decoration: none;
+}
+
+.back-link, .back-link:visited, .back-link:hover, .back-link:active{
+  color: black;
+}
+
+.top-message{
+  margin-top: 100px;
+}
