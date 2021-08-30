@@ -86,8 +86,12 @@ function timeCount(){
 function checkAnser(){
   if(event.ctrlKey){
     if(event.key === getQuessionKey(question)){
-     updateQuestion()
-     incrementScore()
+      document.getElementById("js-bingo-audio").play()
+      updateQuestion()
+      incrementScore()
+    }
+    else{
+      document.getElementById("js-wrong-audio").play()
     }
   }
 }
@@ -147,7 +151,7 @@ function initPlactice(){
   jsQuestionImage.height = "380"
 
   // ガイドテキストリセット
-  document.getElementById("js-question-guide").innerText = "space キーでstart"
+  document.getElementById("js-question-guide").innerText = "spaceキーで開始"
 
   // result要素の非表示
   document.getElementById('js-result-element').style.display = "none"

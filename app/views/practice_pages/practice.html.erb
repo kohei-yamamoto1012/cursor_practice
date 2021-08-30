@@ -1,8 +1,9 @@
 <%= javascript_include_tag 'practice.js' %>
 
+<%= audio_tag('bingo.mp3',id: 'js-bingo-audio') %>
+<%= audio_tag('wrong.mp3',id: 'js-wrong-audio') %>
 
 <div class="mx-auto w-50 text-center mt-5">
-  
   <h4 class="text-left">Time: <span id="js-time-view">10</span></h4>
   <h4 class="text-left">Score: <span id="js-score-view">0</span></h4>
 
