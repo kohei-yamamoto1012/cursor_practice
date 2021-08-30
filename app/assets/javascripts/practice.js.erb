@@ -6,7 +6,7 @@ var questions = {
   right: 3
 };
 
-var defaultTime = 10
+var defaultTime = 30
 var time = defaultTime
 var timer
 var score = 0
@@ -77,9 +77,9 @@ function timeCount(){
   time--
   document.getElementById("js-time-view").innerText = time
 
-  if(time == 0){
-    clearInterval(timer);
-    endPractice();
+  if(time <= 0){
+    clearInterval(timer)
+    endPractice()
   }
 }
 
@@ -96,8 +96,8 @@ function updateQuestion(){
   question = randomQuestion()
   const jsQuestionImage = document.getElementById("js-question-image")
   jsQuestionImage.src = getQuestionImagePath(question)
-  jsQuestionImage.width = "200"
-  jsQuestionImage.height = "280"
+  jsQuestionImage.width = "300"
+  jsQuestionImage.height = "380"
 
   const jsQuestionGuide = document.getElementById("js-question-guide")
   jsQuestionGuide.innerText = getQuessionGuide(question)
@@ -112,11 +112,11 @@ function endPractice(){
   // 画像更新
   const jsQuestionImage = document.getElementById("js-question-image")
   jsQuestionImage.src = "<%= image_path("practice_images/end") %>"
-  jsQuestionImage.width = "300"
-  jsQuestionImage.height = "300"
+  jsQuestionImage.width = "400"
+  jsQuestionImage.height = "400"
 
   // ガイドテキスト更新
-  document.getElementById("js-question-guide").innerText = "おつかれさまでした〜"
+  document.getElementById("js-question-guide").innerText = "おつかれさまでした！"
 
   // result要素の表示
   document.getElementById('js-result-element').style.display = "block"
@@ -129,6 +129,9 @@ function endPractice(){
 }
 
 function initPlactice(){
+  // ブラウザバック時のイベントセット
+  window.addEventListener("popstate", clearEvent)
+
   // scoreリセット
   score = 0
   document.getElementById("js-score-view").innerText = score
@@ -140,8 +143,8 @@ function initPlactice(){
   // 画像リセット
   const jsQuestionImage = document.getElementById("js-question-image")
   jsQuestionImage.src = "<%= image_path("practice_images/start") %>"
-  jsQuestionImage.width = "400"
-  jsQuestionImage.height = "280"
+  jsQuestionImage.width = "500"
+  jsQuestionImage.height = "380"
 
   // ガイドテキストリセット
   document.getElementById("js-question-guide").innerText = "space キーでstart"
@@ -159,13 +162,15 @@ function initPlactice(){
   document.getElementById("js-retry-btn").addEventListener("click", initPlactice)
 }
 
+function clearEvent(){
+  clearInterval(timer)
+  window.removeEventListener("keydown", startPractice)
+  window.removeEventListener("popstate", clearEvent)
+}
+
 // main
 if (document.readyState !== 'loading') {
-  console.log("実行")
   initPlactice();
 } else {
-  document.addEventListener("DOMContentLoaded", () => {
-    console.log("実行")
-    initPlactice()
-  });
+  document.addEventListener("DOMContentLoaded", initPlactice)
 }

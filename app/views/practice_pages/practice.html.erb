@@ -1,21 +1,21 @@
 <%= javascript_include_tag 'practice.js' %>
 
-<h4>残り時間: <span id="js-time-view">10</span></h4>
-<h4>正答数: <span id="js-score-view">0</span></h4>
-<%= image_tag 'practice_images/start', id: "js-question-image", size: '400x280'%>
-<h4 id="js-question-guide">space キーでstart</h4>
 
+<div class="mx-auto w-50 text-center mt-5">
+  
+  <h4 class="text-left">Time: <span id="js-time-view">10</span></h4>
+  <h4 class="text-left">Score: <span id="js-score-view">0</span></h4>
 
-<div id="js-result-element" style="display: block;">
-  <%= form_with model: @practice_result, url: practice_results_path, local: true do |f| %>
-    <%= f.text_field :name, maxlength: 30, placeholder: "名前を入力！" %>
-    <%= f.hidden_field :score, maxlength: 10, value: 0, id: 'js-score-field'%>
-    <%= f.submit class: 'btn btn-primary', value: 'ランキング登録' %>
-  <% end %>
+  <%= image_tag 'practice_images/start', id: 'js-question-image'%>
+  <h3 id="js-question-guide" class="mt-3 mb-4">spaceキーで開始</h4>
 
-  <div id="js-retry-btn" class="btn btn-primary">リトライ</div>
-</div>
+  <div id="js-result-element" style="display: none;">
+    <%= form_with model: @practice_result, url: practice_results_path, local: true do |f| %>
+      <%= f.text_field :name, maxlength: 30, placeholder: "名前を入力" %>
+      <%= f.hidden_field :score, maxlength: 10, value: 0, id: 'js-score-field'%>
+      <%= f.submit class: 'btn btn-dark', value: 'ランキング登録' %>
+    <% end %>
 
-<div class="nav justify-content-center mb-3">
-  <%= link_to "戻る", root_path, class: "nav-link back-link" %>
+    <span id="js-retry-btn" class="btn btn-dark mt-2">リトライ</span>
+  </div>
 </div>
