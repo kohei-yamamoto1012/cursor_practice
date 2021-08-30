@@ -8,7 +8,7 @@ var questions = {
 
 var defaultTime = 30
 var time = defaultTime
-var timer
+var timer = null
 var score = 0
 
 function randomQuestion(){
@@ -68,7 +68,6 @@ function startPractice(){
   if (event.key === " ") {
     updateQuestion()
     window.addEventListener("keydown", checkAnser)
-    window.removeEventListener("keydown", startPractice)
     timer = setInterval(timeCount, 1000)
   }
 }
@@ -78,7 +77,8 @@ function timeCount(){
   document.getElementById("js-time-view").innerText = time
 
   if(time <= 0){
-    clearEvent()
+    clearInterval(timer)
+    window.removeEventListener("keydown", checkAnser)
     endPractice()
   }
 }
@@ -128,9 +128,6 @@ function endPractice(){
 }
 
 function initPlactice(){
-  // ブラウザバック時のイベントセット
-  window.addEventListener("popstate", clearEvent)
-
   // scoreリセット
   score = 0
   document.getElementById("js-score-view").innerText = score
@@ -155,22 +152,11 @@ function initPlactice(){
   window.removeEventListener("keydown", checkAnser)
 
   // 開始イベントのセット
-  window.addEventListener("keydown", startPractice)
+  window.addEventListener("keydown", startPractice, { once: true })
 
   // リセットのセット
   document.getElementById("js-retry-btn").addEventListener("click", initPlactice)
 }
 
-function clearEvent(){
-  clearInterval(timer)
-  window.removeEventListener("keydown", startPractice)
-  window.removeEventListener("keydown", checkAnser)
-  window.removeEventListener("popstate", clearEvent)
-}
-
 // main
-if (document.readyState !== 'loading') {
-  initPlactice();
-} else {
-  document.addEventListener("DOMContentLoaded", initPlactice)
-}
+document.addEventListener("DOMContentLoaded", initPlactice)
