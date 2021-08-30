@@ -78,7 +78,7 @@ function timeCount(){
   document.getElementById("js-time-view").innerText = time
 
   if(time <= 0){
-    clearInterval(timer)
+    clearEvent()
     endPractice()
   }
 }
@@ -89,9 +89,6 @@ function checkAnser(){
       document.getElementById("js-bingo-audio").play()
       updateQuestion()
       incrementScore()
-    }
-    else{
-      document.getElementById("js-wrong-audio").play()
     }
   }
 }
@@ -128,8 +125,6 @@ function endPractice(){
   // score-filed更新
   document.getElementById("js-score-field").value = score
 
-  // イベント解除
-  window.removeEventListener("keydown", checkAnser)
 }
 
 function initPlactice(){
@@ -169,6 +164,7 @@ function initPlactice(){
 function clearEvent(){
   clearInterval(timer)
   window.removeEventListener("keydown", startPractice)
+  window.removeEventListener("keydown", checkAnser)
   window.removeEventListener("popstate", clearEvent)
 }
 
