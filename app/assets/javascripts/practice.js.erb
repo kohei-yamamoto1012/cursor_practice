@@ -67,6 +67,7 @@ function getQuessionGuide(question){
 function startPractice(){
   if (event.key === " ") {
     updateQuestion()
+    window.removeEventListener("keydown", startPractice)
     window.addEventListener("keydown", checkAnser)
     timer = setInterval(timeCount, 1000)
   }
@@ -152,7 +153,7 @@ function initPlactice(){
   window.removeEventListener("keydown", checkAnser)
 
   // 開始イベントのセット
-  window.addEventListener("keydown", startPractice, { once: true })
+  window.addEventListener("keydown", startPractice)
 
   // リセットのセット
   document.getElementById("js-retry-btn").addEventListener("click", initPlactice)
